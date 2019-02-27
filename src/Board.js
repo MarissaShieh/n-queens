@@ -73,26 +73,29 @@
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
-
+ 
     // ROWS - run from left to right
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //var board = this.get(rowIndex);
       var numOfThingsInThisRow = 0;
-      for (let i = 0; i < rowIndex.length; i++) {
-        numOfThingsInThisRow = numOfThingsInThisRow + rowIndex[i];
+      for (let i = 0; i < this.attributes[rowIndex].length; i++) {
+        // console.log(rowIndex)
+        numOfThingsInThisRow = numOfThingsInThisRow + this.attributes[rowIndex][i];
       }
+      // console.log(typeof numOfThingsInThisRow)
       return numOfThingsInThisRow > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      //THINGS START HERE
       var hasConflict = false;
-      // console.log(this.attributes);
+      console.log(`atr`, this.attributes);
       for (let rowNum in this.attributes) {
         //console.log('this.hasRowConflictAt(rowNum): ',this.hasRowConflictAt(rowNum));
+        console.log(`#`, rowNum)
         hasConflict = hasConflict || this.hasRowConflictAt(rowNum);
       }
       console.log(hasConflict);
