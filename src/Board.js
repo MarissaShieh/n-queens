@@ -62,14 +62,14 @@
     },
 
 
-/*
+    /*
          _             _     _
      ___| |_ __ _ _ __| |_  | |__   ___ _ __ ___ _
     / __| __/ _` | '__| __| | '_ \ / _ \ '__/ _ (_)
     \__ \ || (_| | |  | |_  | | | |  __/ | |  __/_
     |___/\__\__,_|_|   \__| |_| |_|\___|_|  \___(_)
 
- */
+     */
     /*=========================================================================
     =                 TODO: fill in these Helper Functions                    =
     =========================================================================*/
@@ -79,12 +79,24 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      var numOfThingsInThisRow = 0;
+      for (let i = 0; i < rowIndex.length; i++) {
+        numOfThingsInThisRow = numOfThingsInThisRow + rowIndex[i];
+      }
+      return numOfThingsInThisRow > 1;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      //THINGS START HERE
+      var hasConflict = false;
+      // console.log(this.attributes);
+      for (let rowNum in this.attributes) {
+        //console.log('this.hasRowConflictAt(rowNum): ',this.hasRowConflictAt(rowNum));
+        hasConflict = hasConflict || this.hasRowConflictAt(rowNum);
+      }
+      console.log(hasConflict);
+      return hasConflict;
     },
 
 
