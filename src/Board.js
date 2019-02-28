@@ -127,12 +127,33 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var count = 0;
+      var column = Number(majorDiagonalColumnIndexAtFirstRow)
+      for (let row = 0; row < this.attributes[majorDiagonalColumnIndexAtFirstRow].length; row++) { 
+        if (this.attributes[row][column] > 0) {
+          count += 1;
+          if(count > 1) {
+            return true
+          }
+        }
+        column += 1;
+        if (column === this.attributes[0].length) {
+          column = 0;
+          count = 0;
+        }
+      }
+      return count > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      var hasConflict = false;
+      // for (let diagNum in this.attributes) {
+      for (var diagNum = 0; diagNum < this.attributes[0].length; diagNum++) {
+        var trueFalse = this.hasMajorDiagonalConflictAt(diagNum);
+        hasConflict = hasConflict || trueFalse;
+      }
+      return hasConflict;
     },
 
 
@@ -142,12 +163,27 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var count = 0;
+      var column = Number(minorDiagonalColumnIndexAtFirstRow)
+      for (let row = 0; row < this.attributes[minorDiagonalColumnIndexAtFirstRow].length; row++) {
+        if (this.attributes[row][column] > 0) {
+          count += 1;
+        }
+        column -= 1;
+        if (column === -1) {
+          column = this.attributes[0].length;
+        }
+      }
+      return count > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var hasConflict = false;
+      for (var diagNum = this.attributes[0].length - 1; diagNum > -1; diagNum--) {
+        hasConflict = hasConflict || this.hasMinorDiagonalConflictAt(diagNum);
+      }
+      return hasConflict;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
