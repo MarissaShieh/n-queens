@@ -5,8 +5,11 @@ describe('solvers', function() {
 
     it('finds a valid solution for n of 1-8', function() {
       _.range(1, 9).map(function(n) {
+        //console.log("error not happened yet. n = ",n);
         var solutionBoard = new Board(findNRooksSolution(n));
+        console.log("error not happened yet. n = ",n);
         var numPieces = _.reduce(solutionBoard.rows(), function(memo, row) {
+          //console.log("error not happened yet. n = ",n);
           return memo + _.reduce(row, function(memo, col) {
             return memo + col;
           }, 0);
