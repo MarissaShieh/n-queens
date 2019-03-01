@@ -82,16 +82,64 @@ loop through row
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
 window.findNQueensSolution = function(n) {
-  var solution = undefined; //fixme
-
-  console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-  return solution;
+  var solution;
+  var newBoard = new Board({n:n});
+  var queens = 0;
+  // if(n === 1) {
+  //   return [[1]];
+  // }
+  // if(n === 2 || 3) {
+  //   return [[0]];
+  // }
+  for(var column = 0; column < n; column++){
+    for(var row = 0; row < n; row++) {
+      var checkRook = function(){
+        newBoard.togglePiece(row, column)
+        queens++;
+        if (newBoard.hasAnyQueensConflicts()) {
+          newBoard.togglePiece(row, column);
+          queens--;
+        }
+        if (queens === n){
+          solution = newBoard;
+        }
+      }
+      checkRook(newBoard);
+    }
+  }
+  var newSolution = []
+  for (var i = 0; i < queens; i++) {
+    newSolution.push(solution.attributes[i])
+  }
+  console.log('Single solution for ' + n + ' queens:', JSON.stringify(newSolution));
+  return newSolution;
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var successfulBoardCount = 0;
+  var newBoard = new Board({n:n});
+  // if(n === 1) {
+  //   return 1;
+  // }
+  // if(n === 2 || n === 3 || n === 0) {
+  //   return 0;
+  // }
+  var iterateRookBoards = function(rowNum){
+    for (let column = 0; column < n; column++) {
+      if (rowNum === n) {
+        successfulBoardCount++;
+        return;
+      }
+      newBoard.togglePiece(rowNum, column);
 
-  console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-  return solutionCount;
+      if (!newBoard.hasAnyQueensConflicts()) {
+        iterateRookBoards(rowNum+1,column);
+      }
+      newBoard.togglePiece(rowNum, column);
+      }
+  }
+  iterateRookBoards(0);
+  console.log('Number of solutions for ' + n + ' queens:', successfulBoardCount);
+  return successfulBoardCount;
 };
